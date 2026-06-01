@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react'
 import {dummyResumeData} from '../assets/assets'
 import {FilePenLineIcon, PencilIcon, PlusIcon, TrashIcon, UploadCloud, UploadCloudIcon, XIcon} from 'lucide-react'
 import {useNavigate} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import api from '../configs/api'
+import toast from 'react-hot-toast'
+import pdfToText from 'react-pdftotext'
 
 const Dashboard = () => {
+
+  const {user, token} = useSelector(state => state.auth)
 
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"]
 
@@ -19,6 +25,8 @@ const Dashboard = () => {
 
   const  [editResumeID, setEditResumeId] = useState('')
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const navigate = useNavigate()
 
   const loadAllResumes= async () =>{
@@ -26,15 +34,39 @@ const Dashboard = () => {
   }
 
   const createResume = async (event) => {
+   try {
     event.preventDefault()
+    const {data} = await api.post('api/resumes/create', {title}, {headers: {
+      Authorization: token
+    }}) 
+    setAllResumes([...allResumes, data.resume])
+    setTitle('')
     setShowCreateResume(false)
-    navigate('/app/builder/res123')
+    navigate(`/app/builder/${data.resume._id}`)
+   } 
+   catch (error) {
+    toast.error(error?.response?.data?. message || error.message)
+   }
   }
 
   const uploadResume = async (event) =>{
     event.preventDefault()
+    setIsLoading(true)
+    try {
+      const resumeText = await pdfToText(resume)
+      const {data} = await api.post('api/ai/upload-resume', {title, resumeText}, {headers: {
+      Authorization: token
+    }})
+    setTitle('')
+    setResume(null)
     setShowUploadResume(false)
-    navigate('/app/builder/res123')
+    navigate(`/app/builder/${data.resumeId}`)
+    } 
+    catch (error) {
+    toast.error(error?.response?.data?.message || error.message);
+}
+     setIsLoading(false)
+    
   }
 
   const editTitle = async (event)=>{
@@ -100,7 +132,7 @@ const Dashboard = () => {
         </div>
 
           {showCreateResume && (
-            <form onSubmit={createResume} onClick={()=> setShowCreateResume(false)} className='fixed inset-0 bg-black/70 back-drop-blur bg-opacity-50 z-10 flex items-center justify-center'>
+            <form onSubmit={createResume} onClick={()=> setShowCreateResume(false)} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center'>
               <div onClick={e => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
                 <h2 className='text-xl font-bold mb-4'>Create a Resume</h2>
                 <input onChange={(e)=> setTitle(e.target.value)} value={title} type="text" placeholder='Enter Resume title' className='w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600' required/>
@@ -113,7 +145,7 @@ const Dashboard = () => {
           }
 
           {showUploadResume && (
-            <form onSubmit={uploadResume} onClick={()=> setShowUploadResume(false)} className='fixed inset-0 bg-black/70 back-drop-blur bg-opacity-50 z-10 flex items-center justify-center'>
+            <form onSubmit={uploadResume} onClick={()=> setShowUploadResume(false)} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center'>
               <div onClick={e => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
                 <h2 className='text-xl font-bold mb-4'>Upload Resume</h2>
                 <input onChange={(e)=> setTitle(e.target.value)} value={title} type="text" placeholder='Enter Resume title' className='w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600' required/>
@@ -142,7 +174,7 @@ const Dashboard = () => {
           }
 
           {editResumeID && (
-            <form onSubmit={editTitle} onClick={()=> setEditResumeId('')} className='fixed inset-0 bg-black/70 back-drop-blur bg-opacity-50 z-10 flex items-center justify-center'>
+            <form onSubmit={editTitle} onClick={()=> setEditResumeId('')} className='fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center'>
               <div onClick={e => e.stopPropagation()} className='relative bg-slate-50 border shadow-md rounded-lg w-full max-w-sm p-6'>
                 <h2 className='text-xl font-bold mb-4'>Edit Resume Title</h2>
                 <input onChange={(e)=> setTitle(e.target.value)} value={title} type="text" placeholder='Enter Resume title' className='w-full px-4 py-2 mb-4 focus:border-green-600 ring-green-600' required/>
