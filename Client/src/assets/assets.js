@@ -97,7 +97,7 @@ export const dummyResumeData = [
             image: dummy_profile
         },
         _id: "78e3b42c2d5ff49286cc148f",
-        userId: "78d2e0bdcf2886efg03e7e98",
+        userId: "78d2e0bdcf2886efa03e7e98",
         title: "Satyam's Resume",
         public: true,
         professional_summary: "Creative and detail-oriented Frontend Engineer with 5+ years of experience crafting responsive, user-centric web applications using React, Vue, and modern CSS frameworks.",
@@ -171,8 +171,8 @@ export const dummyResumeData = [
             profession: "Backend Developer",
             image: dummy_profile
         },
-        _id: "89f4c53d3e6gg59397dd259g",
-        userId: "89e3f1cedg3997fgh14f8f09",
+        _id: "89f4c53d3e6aa59397dd2590",
+        userId: "89e3f1ced33997faa14f8090",
         title: "Pratham's Resume",
         public: true,
         professional_summary: "Dedicated Backend Developer with 7+ years of experience building secure, high-performance APIs and microservices using Node.js, Python, and PostgreSQL. Passionate about scalability, automation, and clean architecture.",
@@ -185,7 +185,7 @@ export const dummyResumeData = [
                 end_date: "Present",
                 description: "Developed distributed microservices using Node.js and Docker. Implemented API rate limiting, authentication, and background job processing using Redis and Bull.",
                 is_current: true,
-                _id: "89f4c53d3e6gg59397dd259h"
+                _id: "89f4c53d3e6aa59397dd2620"
             },
             {
                 company: "CloudCore Systems",
@@ -194,7 +194,7 @@ export const dummyResumeData = [
                 end_date: "2021-02",
                 description: "Maintained and scaled backend systems built on Python and PostgreSQL. Automated deployments with GitLab CI/CD and improved API response time by 35%.",
                 is_current: false,
-                _id: "89f4c53d3e6gg59397dd259i"
+                _id: "89f4c53d3e6aa59397dd2610"
             }
         ],
         education: [
@@ -204,7 +204,7 @@ export const dummyResumeData = [
                 field: "Information Technology",
                 graduation_date: "2016-05",
                 gpa: "3.9",
-                _id: "89f4c53d3e6gg59397dd259j"
+               _id: "89f4c53d3e6aa59397dd2600"
             },
             {
                 institution: "Central High School",
@@ -212,7 +212,7 @@ export const dummyResumeData = [
                 field: "Science",
                 graduation_date: "2012-04",
                 gpa: "",
-                _id: "89f4c53d3e6gg59397dd259k"
+                _id: "89f4c53d3e6aa59397dd2630"
             }
         ],
         template: "minimal-image",
@@ -222,13 +222,13 @@ export const dummyResumeData = [
                 name: "Invoicr - Invoice Management System",
                 type: "Web Application (FinTech)",
                 description: "Invoicr is a secure web platform that allows freelancers and small businesses to generate, track, and automate professional invoices. Built with Node.js, MongoDB, and Stripe integration.",
-                _id: "89f4c53d3e6gg59397dd259l"
+                _id: "89f4c53d3e6aa59397dd2640"
             },
             {
                 name: "API Monitor Dashboard",
                 type: "DevOps Tool",
                 description: "A real-time API monitoring dashboard for microservices. Tracks latency, uptime, and error rates using Prometheus and Grafana.",
-                _id: "89f4c53d3e6gg59397dd259m"
+                _id: "89f4c53d3e6aa59397dd2650"
             }
         ],
         updatedAt: "2025-09-25T15:26:49.652Z",

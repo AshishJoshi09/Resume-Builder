@@ -1,6 +1,7 @@
 import imageKit from "../configs/imageKit.js";
 import Resume from "../models/Resume.js";
 import fs from 'fs';
+import mongoose from "mongoose";
 
 
 
@@ -32,6 +33,17 @@ export const deleteResume = async (req, res) => {
     try{
         const userId = req.userId;
         const {resumeId} = req.params;
+
+        console.log("resumeId received:", resumeId);
+        console.log(
+  "isValid:",
+  mongoose.Types.ObjectId.isValid(resumeId)
+);
+         if (!mongoose.Types.ObjectId.isValid(resumeId)) {
+            return res.status(400).json({
+                message: "Invalid Resume ID"
+            });
+        }
 
        await Resume.findOneAndDelete({userId, _id: resumeId})
 
@@ -109,7 +121,14 @@ export const updateResume = async (req, res) =>{
         const {resumeId, resumeData, removeBackground} = req.body;
         const image = req.file;
 
-        let resumeDataCopy = JSON.parse(resumeData);
+        let resumeDataCopy;
+
+        if(typeof resumeData === 'string'){
+            resumeDataCopy = await JSON.parse(resumeData);
+        }
+        else{
+            resumeDataCopy = structuredClone(resumeData)
+        }
 
         if(image){
 
