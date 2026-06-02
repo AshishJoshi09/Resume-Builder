@@ -58,7 +58,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
                             CONTACT
                         </h2>
-                        <div className="space-y-2 text-sm">
+                        <div className="space-y-2 text-sm w-full">
                             {data.personal_info?.phone && (
                                 <div className="flex items-center gap-2">
                                     <Phone size={14} style={{ color: accentColor }} />
@@ -67,7 +67,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                             )}
                             {data.personal_info?.email && (
                                 <div className="flex items-center gap-2">
-                                    <Mail size={14} style={{ color: accentColor }} />
+                                    <Mail size={20} style={{ color: accentColor }} />
                                     <span>{data.personal_info.email}</span>
                                 </div>
                             )}
