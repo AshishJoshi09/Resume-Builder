@@ -1,5 +1,6 @@
 
 
+import { GoogleGenAI } from "@google/genai";
 import ai from "../configs/ai.js";
 import Resume from "../models/Resume.js";
 
@@ -195,7 +196,7 @@ export const uploadResume = async (req, res) => {
             contents: prompt
         });
 
-       const extractedData = response.text();
+       const extractedData = response.text;
 
         console.log("========== AI RESPONSE ==========");
         console.log(extractedData);
