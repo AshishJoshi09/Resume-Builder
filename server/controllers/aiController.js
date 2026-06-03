@@ -136,8 +136,10 @@ export const uploadResume = async (req, res) => {
 
             Extract all information from the resume and return ONLY valid JSON.
 
-            Do not return markdown.
+            Do not include markdown fences.
             Do not return explanations.
+            Do not include the word json.
+            Do not include backticks.
             Do not wrap response in \`\`\`.
 
             Return JSON in this exact structure:
@@ -193,12 +195,21 @@ export const uploadResume = async (req, res) => {
             contents: prompt
         });
 
-        const extractedData = response.text;
+       const extractedData = response.text();
 
         console.log("========== AI RESPONSE ==========");
         console.log(extractedData);
 
-        const parsedData = JSON.parse(extractedData);
+        // Remove markdown if Gemini returns it
+        const cleanedData = extractedData
+            .replace(/```json\s*/gi, "")
+            .replace(/```\s*/g, "")
+            .trim();
+
+        console.log("========== CLEANED RESPONSE ==========");
+        console.log(cleanedData);
+
+        const parsedData = JSON.parse(cleanedData);
 
         const newResume = await Resume.create({
             userId,
